@@ -9,7 +9,8 @@ Q_2 = 0 # initializing
 R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 6, 10, 12,
 15, 16, 12, 3, 1, 0, 0, 4, 3, 2, 0, 0, 0, 1, 3, 2, 2, 0, 0, 0, 0, 1, 2,
 4, 7, 3, 2, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-0, 0, 0, 0] # m^3/s  - effective rainfall/ water impinging on basin 
+0, 0, 0, 0] # mm/day  - effective rainfall/ water impinging on basin 
+rainfall = R
 A_neg = - 1 / 6 # h^-1
 
 basin_area = 97000000
@@ -78,5 +79,11 @@ lines = [p1, p2, p3, p4, p5]
 host.legend(lines, [l.get_label() for l in lines], loc="center right", borderaxespad=0.1)
 
 plt.subplots_adjust(right=0.85)
+
+plt.show()
+
+plt.bar(x, rainfall)
+plt.xlabel('Time [h]')
+plt.ylabel('Rainfall [mm]')
 
 plt.show()
