@@ -6,7 +6,10 @@ t_1 = 0 # h
 t_2 = 1 # h
 Q_1 = 0 # m^3/s
 Q_2 = 0 # initializing
-R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 6, 10, 12, 15, 16, 12, 3, 1, 0, 0, 4, 3, 2, 0, 0, 0, 1, 3, 2, 2, 0, 0, 0, 0, 1, 2, 4, 7, 3, 2, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # m^3/s  - effective rainfall/ water impinging on basin 
+R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 6, 10, 12,
+15, 16, 12, 3, 1, 0, 0, 4, 3, 2, 0, 0, 0, 1, 3, 2, 2, 0, 0, 0, 0, 1, 2,
+4, 7, 3, 2, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0] # m^3/s  - effective rainfall/ water impinging on basin 
 A_neg = - 1 / 6 # h^-1
 
 basin_area = 97000000
@@ -36,8 +39,6 @@ turbine[10:15] = 60
 turbine[38:55] = 60
 turbine[55:] = 30
 rel_gate = np.zeros(72) # never open release gate
-# rel_gate[21:36] = 50
-# rel_gate[45:50] = 50
 tailrace = np.add(turbine, rel_gate)
 
 # calculate reservoir level
@@ -53,7 +54,6 @@ for i, rl in enumerate(res_level):
     if (rl > 0):
         tailrace[i] += rl
 
-print(res_level)
 x = list(range(0,72))
 
 fig, host = plt.subplots(1, 1, figsize=(10,6))
