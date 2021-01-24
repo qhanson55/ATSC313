@@ -30,8 +30,8 @@ inflow = [0] * 72 # m^3/s
 # Equation 3 for inflow
 for i in range(0,72): 
     inflow[i] = Q_1
-    Q_2 = Q_1 * math.exp(A_neg * (t_2 - t_1)) + R[i] * (1 - math.exp(A_neg * (t_2 - t_1))) # hr in t_1 & t_2 cancel out with A_neg hr-1
-    Q_1 = Q_2
+    Q_2 = Q_1 * math.exp(A_neg * (t_2 - t_1)) + R[i] * (1 - math.exp(A_neg * (t_2 - t_1))) 
+    Q_1 = Q_2                     # ^ hr in t_1 & t_2 cancel out with A_neg hr-1 ^
     t_1 += 1
     t_2 += 1
 
