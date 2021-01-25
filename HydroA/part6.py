@@ -6,10 +6,14 @@ t_1 = 0 # h
 t_2 = 1 # h
 Q_1 = 0 # m^3/s
 Q_2 = 0 # initializing
-R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 6, 10, 12,
-15, 16, 12, 3, 1, 0, 0, 4, 3, 2, 0, 0, 0, 1, 3, 2, 2, 0, 0, 0, 0, 1, 2,
-4, 7, 3, 2, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 3, 6, 4, # actuall forecast
+5, 6, 13, 19, 22, 22, 19, 16, 10, 6, 6, 3, 3, 2, 5, 3, 3, 3, 2, 1, 1, 3, 3,
+3, 4, 3, 2, 5, 3, 5, 1, 3, 4, 3, 2, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 0, 0, 0, 0] # mm/day  - effective rainfall/ water impinging on basin 
+# R = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 6, 10, 12,
+# 15, 16, 12, 3, 1, 0, 0, 4, 3, 2, 0, 0, 0, 1, 3, 2, 2, 0, 0, 0, 0, 1, 2,
+# 4, 7, 3, 2, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+# 0, 0, 0, 0] # 50% forecast 
 rainfall = R
 A_neg = - 1 / 6 # h^-1
 
@@ -36,10 +40,13 @@ for i in range(0,72):
     t_2 += 1
 
 turbine = np.full(72, 65) # turbine on full for whole 72 hours
-turbine[10:15] = 60
-turbine[38:55] = 60
-turbine[55:] = 30
-rel_gate = np.zeros(72) # never open release gate
+# turbine[10:15] = 60
+# turbine[38:55] = 60
+# turbine[55:] = 30
+rel_gate = np.full(72, 50) # always full open release gate
+rel_gate[:5] = 0
+# rel_gate[38:55] = 60
+# rel_gate[55:] = 30
 tailrace = np.add(turbine, rel_gate)
 
 # calculate reservoir level
@@ -52,8 +59,10 @@ cur_volume = storage_volume
 for i, rl in enumerate(res_level):
     cur_volume = cur_volume + inflow_per_hour[i] - turb_per_hour[i] - rg_per_hour[i]
     res_level[i] = cur_volume / res_surface_area - max_depth
-    if (rl > 0):
-        tailrace[i] += rl
+    print(res_level[i])
+    if (res_level[i] > 0):
+        tailrace[i] += (cur_volume - storage_volume) / secs_per_hour
+        print(tailrace[i])
 
 x = list(range(0,72))
 
