@@ -29,10 +29,10 @@ R = [r / secs_per_hour for r in R] # hr to s conversion
 R = [r * basin_area for r in R] # water amount converter to volume (m^3/s)
 
 
-inflow = [0] * 72 # m^3/s
+inflow = [0] * len(R) # m^3/s
 
 # Equation 3 for inflow
-for i in range(0,72): 
+for i in range(len(R)): 
     inflow[i] = Q_1
     Q_2 = Q_1 * math.exp(A_neg * (t_2 - t_1)) + R[i] * (1 - math.exp(A_neg * (t_2 - t_1))) 
     Q_1 = Q_2                     # ^ hr in t_1 & t_2 cancel out with A_neg hr-1 ^
